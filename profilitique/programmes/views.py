@@ -1,6 +1,5 @@
 from django.shortcuts import render
-from programmes.models import Candidat
-from programmes.models import Proposition
+from programmes.models import Candidat, Proposition, Thematique
 
 
 def indexcandidat(request):
@@ -16,6 +15,6 @@ def indexproposition(request):
 
 
 def questions(request):
-    thematique = u'Th\xe9matique'
+    thematique = Thematique.objects.latest('id')
     context = {'thematique': thematique}
     return render(request, 'questions.html', context)
