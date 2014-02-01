@@ -1,6 +1,8 @@
 from django.contrib import admin
 from programmes.models import Candidat, Thematique, Proposition
 
-admin.site.register(Candidat)
+class CandidatAdmin(admin.ModelAdmin):
+	list_display = ('nom', 'prenom','parti')
+admin.site.register(Candidat,CandidatAdmin)
 admin.site.register(Thematique)
 admin.site.register(Proposition)
