@@ -1,16 +1,27 @@
-<head>
-	<link rel="stylesheet" type="text/css" href="/static/css/proposition.css">
-	<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.js"></script>
-	<script type="text/javascript" src="/static/js/anim.js"></script>
-</head>
-<h1>les proposition</h1>
+{% extends "base.html" %}
 
-<div id='liste_propsition'>
-{% for choice in latest_proposition_list %}
-	<div class="box_proposition">
-		<h2>{{ choice.thematique }}</h2>
-	    <div class="resume">{{ choice.resume }}</div><img id="plus_{{ forloop.counter0 }}" src="/static/img/plus.png">
-	    <div id="description_proposition_{{ forloop.counter0 }}" class="description_proposition">{{ choice.description }}</div>
-    </div>
-{% endfor %}
-</div>
+{% block head %}
+	<head>
+		<link rel="stylesheet" type="text/css" href="/static/css/proposition.css">
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.js"></script>
+		<script type="text/javascript" src="/static/js/anim.js"></script>
+	</head>
+{% endblock head %}
+
+{% block header %}
+            <hgroup>
+                <h1 class="brand-title">les propositions</h1>
+            </hgroup>
+{% endblock header %}
+
+{% block content %}
+	<div id='liste_propsition'>
+	{% for choice in latest_proposition_list %}
+		<div class="box_proposition post-description">
+			<h2>{{ choice.thematique }}</h2>
+		    <div class="resume">{{ choice.resume }}</div><img id="plus_{{ forloop.counter0 }}" src="/static/img/plus.png">
+		    <div id="description_proposition_{{ forloop.counter0 }}" class="description_proposition">{{ choice.description }}</div>
+	    </div>
+	{% endfor %}
+	</div>
+{% endblock content %}
