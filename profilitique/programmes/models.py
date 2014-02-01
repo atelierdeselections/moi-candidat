@@ -23,4 +23,4 @@ class Proposition(models.Model):
     candidat = models.ForeignKey(Candidat)
 
     def __unicode__(self):
-        return self.nom
+        return self.resume
