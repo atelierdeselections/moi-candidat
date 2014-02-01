@@ -15,6 +15,6 @@ def indexproposition(request):
 
 
 def questions(request):
-    thematique = Thematique.objects.latest('id')
+    thematique = Thematique.objects.all().order_by('?')[0]
     context = {'thematique': thematique}
     return render(request, 'questions.html', context)
