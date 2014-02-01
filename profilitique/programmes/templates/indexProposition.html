@@ -1,0 +1,16 @@
+<head>
+	<link rel="stylesheet" type="text/css" href="/static/css/proposition.css">
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.js"></script>
+	<script type="text/javascript" src="/static/js/anim.js"></script>
+</head>
+<h1>les proposition</h1>
+
+<div id='liste_propsition'>
+{% for choice in latest_proposition_list %}
+	<div class="box_proposition">
+		<h2>{{ choice.thematique }}</h2>
+	    <div class="resume">{{ choice.resume }}</div><img id="plus_{{ forloop.counter0 }}" src="/static/img/plus.png">
+	    <div id="description_proposition_{{ forloop.counter0 }}" class="description_proposition">{{ choice.description }}</div>
+    </div>
+{% endfor %}
+</div>
