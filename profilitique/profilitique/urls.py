@@ -11,4 +11,5 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^candidats/$', 'programmes.views.indexcandidat'),
 	url(r'^proposition/$', 'programmes.views.indexproposition'),
+    url(r'^questions/$', 'programmes.views.questions'),
 )
