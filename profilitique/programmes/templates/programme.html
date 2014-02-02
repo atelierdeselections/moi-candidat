@@ -1,0 +1,56 @@
+{% extends "baseProgramme.html" %}
+
+{% block head %}
+	<head>
+		<link rel="stylesheet" type="text/css" href="/static/css/proposition.css">
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.js"></script>
+		<script type="text/javascript" src="/static/js/anim.js"></script>
+	</head>
+{% endblock head %}
+
+{% block menu %}
+	<ul>
+	{% for thematique in thematiques %}
+			   <li><a href="#">{{thematique.nom}}</a></li>
+	{% endfor %}
+	</ul>
+{% endblock menu %}
+
+
+{% block liste %}
+	{% for candidat in candidats %}
+	  <div class="email-item email-item-selected pure-g">
+		    <div class="pure-u-3-4">
+		        <h5 class="email-name">{{ candidat.prenom}} {{ candidat.nom}}</h5>
+		    </div>
+		</div>
+	{% endfor %}
+{% endblock liste %}
+
+
+{% block main %}
+	{% for candidat in candidats %}
+	      <div class="email-content">
+		    <div class="email-content-header pure-g">
+		        <div class="pure-u-1-2">
+		            <h1 class="email-content-title">{{ candidat.prenom}} {{ candidat.nom}}</h1>
+		            <p class="email-content-subtitle">
+				{{ candidat.parti_list}}
+		            </p>
+		        </div>
+		    </div>
+		    <div class="email-content-body">
+		    <div id='liste_propsition'>
+			{% for proposition in propositions %}
+				{% if proposition.candidat.id == candidat.id %}
+				<div class="box_proposition post-description">
+					<h2>{{ proposition.thematique }}</h2>
+				    <div class="resume">{{ proposition.resume }}</div><img id="plus_{{ forloop.counter0 }}" src="/static/img/plus.png">
+				    <div id="description_proposition_{{ forloop.counter0 }}" class="description_proposition">{{ proposition.description }}</div>
+			    </div>
+				{% endif %}
+			{% endfor %}
+		    </div>
+		</div>
+	{% endfor %}
+{% endblock main %}

@@ -28,6 +28,12 @@ def choisir(request):
     context = {'thematique': thematique}
     return render(request, 'questions.html', context)
 
+def programmes(request):
+    candidats = Candidat.objects.all()
+    thematiques = Thematique.objects.all()
+    propositions = Proposition.objects.all().order_by('candidat')
+    context = {'thematiques': thematiques,'candidats': candidats, 'propositions':propositions}
+    return render(request, 'programme.html', context)
 
 class ChoisirWizard(SessionWizardView):
     form_list = [Thematique1, Thematique2]
