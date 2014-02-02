@@ -15,5 +15,6 @@ urlpatterns = patterns('',
 	url(r'^proposition/$', 'programmes.views.indexproposition'),
 
     (r'^choisir/$', ChoisirWizard.as_view()),
+	url(r'^resultat/$', 'programmes.views.resultat'),
 
 )

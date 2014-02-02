@@ -1,9 +1,10 @@
+import re
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.formtools.wizard.views import SessionWizardView
 
 from programmes.models import Candidat, Proposition, Thematique
-from programmes.forms import Thematique1, Thematique2
+from programmes.forms import ThematiqueForm
 
 
 
@@ -23,24 +24,52 @@ def indexproposition(request):
     return render(request, 'indexProposition.html', context)
 
 
-def choisir(request):
-    thematique = Thematique.objects.all().order_by('?')[0]
-    context = {'thematique': thematique}
-    return render(request, 'questions.html', context)
+def resultat(request):
+    print "####", request.session['results']
+    votes = request.session['results']
+
+    candidats = Candidat.objects.all()
+    candidats_total = candidats.count()
+    propositions = Proposition.objects.all()
+    propositions_total = propositions.count()
+    thematiques = Thematique.objects.all()
+    thematiques_total = thematiques.count()
+
+    results = []
+    for candidat in candidats:
+        votes_per_candidat = Proposition.objects.filter(candidat=candidat.id, id__in=votes).count()
+        percent = votes_per_candidat/(thematiques_total * 1.0) * 100
+        results.append((percent, candidat))
+    context = {'results': results}
+    return render(request, 'resultat.html', context)
+
+
+def get_thematique_forms():
+    count = Thematique.objects.all().order_by('id').count()
+    thematique_forms = [ThematiqueForm for each in range(count)]
+    return thematique_forms
 
 
 class ChoisirWizard(SessionWizardView):
-    form_list = [Thematique1, Thematique2]
+    form_list = get_thematique_forms()
     template_name = 'choisir.html'
 
     def done(self, form_list, **kwargs):
-        #do_something_with_the_form_data(form_list)
-        return HttpResponseRedirect('/')
+        results = []
+        for form in form_list:
+            results.append(form.cleaned_data['proposition'])
+        self.request.session['results'] = results
+        
+        return HttpResponseRedirect('/resultat/')
 
     def get_context_data(self, **kwargs):
         context = super(ChoisirWizard, self).get_context_data(**kwargs)
-
-        thematique = Thematique.objects.all().order_by('?')[0]
-        context['thematique'] = thematique
+        form_name = str(context['form'])
+        form_id_regex = re.search('name="(\d+)\-', form_name)
+        form_current = int(form_id_regex.groups()[0])
+        thematiques = Thematique.objects.all().order_by('id')
+        for idx, t in enumerate(thematiques):
+            if form_current == idx:
+                context['thematique'] = t
 
         return context

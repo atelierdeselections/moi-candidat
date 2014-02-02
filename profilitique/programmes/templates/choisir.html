@@ -1,5 +1,8 @@
 {% extends "base.html" %}
-{% load i18n %}
+
+{% block head %}
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+{% endblock head %}
 
 {% block header %}
             <hgroup>
@@ -9,27 +12,42 @@
 {% endblock header %}
 
 {% block content %}
+	<form id="thematique" action="" method="post">{% csrf_token %}
+	{{ wizard.management_form }}
+	{% if wizard.form.forms %}
+	    {{ wizard.form.management_form }}
+	    {% for form in wizard.form.forms %}
+		{{ form }}
+	    {% endfor %}
+	{% else %}
+	    {{ wizard.form }}
+	{% endif %}
 
-<p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
-<form action="" method="post">{% csrf_token %}
-<table>
-{{ wizard.management_form }}
-{% if wizard.form.forms %}
-    {{ wizard.form.management_form }}
-    {% for form in wizard.form.forms %}
-        {{ form }}
-    {% endfor %}
-{% else %}
-    {{ wizard.form }}
-{% endif %}
-</table>
-{% if wizard.steps.prev %}
-<button name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}">{% trans "first step" %}</button>
-<button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}">{% trans "prev step" %}</button>
-{% endif %}
-<input type="submit" value="{% trans "submit" %}"/>
-</form>
+            <div class="posts">
+		{% for proposition in thematique.proposition_set.all %}
+                <section class="post">
+                    <div class="post-description" id="proposition-{{ proposition.id }}">
+                        <p>{{ proposition.resume }}</p>
+                    </div>
+                </section>
+		{% endfor %}
+            </div>
 
+	</form>
+	<script>
+	$(function() {
+		console.log('ready...');
+		proposition = $("input[name*='proposition']")
+		console.log(proposition);
+		$(".post-description").bind("click", function() {
+			console.log( "Handler for .click() called." );
+			console.log($(this).attr('id'));
+			console.log($(this).attr('id').match(/\d+/)[0]);
+			choose = $(this).attr('id').match(/\d+/)[0];
+			proposition.val(choose);
+			$('#thematique').submit();
+
+		});
+	});
+	</script>
 {% endblock %}
-
-

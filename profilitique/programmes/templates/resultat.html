@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+
+{% block head %}
+	<style>
+	.post-description {
+		background-color: #fff;
+	}
+	.post-description:hover {
+		cursor:default;
+		background-color: #fff;
+	}
+	</style>
+{% endblock head %}
+
+{% block header %}
+            <hgroup>
+                <h1 class="brand-title">Votre résultat</h1>
+                <h2 class="brand-tagline">Liste de candidats</h2>
+            </hgroup>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a class="pure-button" href="/">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="pure-button" href="/choisir/">Recommencer</a>
+                    </li>
+                </ul>
+            </nav>
+{% endblock header %}
+
+{% block content %}
+
+            <div class="posts">
+		{% for result in results %}
+                <section class="post">
+                    <header class="post-header">
+                        <h2 class="post-title">{{ result.0 }}% {{ result.1.prenom }}, {{ result.1.nom }}</h2>
+                    </header>
+                    <div class="post-description">
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.
+                        </p>
+                    </div>
+                </section>
+		{% endfor %}
+            </div>
+
+{% endblock %}
