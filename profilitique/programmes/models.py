@@ -36,6 +36,7 @@ class Thematique(models.Model):
 class Proposition(models.Model):
     resume = models.TextField(u'résumé')
     description = models.TextField()
+    source = models.TextField()
     thematique = models.ForeignKey(Thematique, verbose_name=u'thématique')
     candidat = models.ForeignKey(Candidat)
 

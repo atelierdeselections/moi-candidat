@@ -1,11 +1,5 @@
 from django import forms
 
 
-class Thematique1(forms.Form):
-    thematique = forms.IntegerField()
-    proposition = forms.IntegerField()
-
-
-class Thematique2(forms.Form):
-    thematique = forms.IntegerField()
-    proposition = forms.IntegerField()
+class ThematiqueForm(forms.Form):
+    proposition = forms.IntegerField(widget=forms.HiddenInput)
