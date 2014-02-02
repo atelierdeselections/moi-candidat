@@ -47,7 +47,10 @@ def resultat(request):
 def get_thematique_forms():
     count = Thematique.objects.all().order_by('id').count()
     thematique_forms = [ThematiqueForm for each in range(count)]
+    if not thematique_forms:
+        return [ThematiqueForm]
     return thematique_forms
+
 
 def programmes(request):
     candidats = Candidat.objects.all()
@@ -55,6 +58,7 @@ def programmes(request):
     propositions = Proposition.objects.all().order_by('candidat')
     context = {'thematiques': thematiques,'candidats': candidats, 'propositions':propositions}
     return render(request, 'programme.html', context)
+
 
 class ChoisirWizard(SessionWizardView):
     form_list = get_thematique_forms()
@@ -77,5 +81,4 @@ class ChoisirWizard(SessionWizardView):
         for idx, t in enumerate(thematiques):
             if form_current == idx:
                 context['thematique'] = t
-
         return context

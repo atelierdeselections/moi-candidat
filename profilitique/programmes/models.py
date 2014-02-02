@@ -12,6 +12,8 @@ class Parti(models.Model):
 class Candidat(models.Model):
     nom = models.CharField(max_length=200)
     prenom = models.CharField(u'prénom', max_length=200)
+    bio = models.TextField(blank=True)
+    photo = models.FileField(upload_to='candidats', blank=True)
     partis = models.ManyToManyField(Parti)
 
     def __unicode__(self):
