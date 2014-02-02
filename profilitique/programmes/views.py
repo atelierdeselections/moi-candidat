@@ -31,6 +31,16 @@ def choisir(request):
 
 class ChoisirWizard(SessionWizardView):
     form_list = [Thematique1, Thematique2]
+    template_name = 'choisir.html'
+
     def done(self, form_list, **kwargs):
         #do_something_with_the_form_data(form_list)
         return HttpResponseRedirect('/')
+
+    def get_context_data(self, **kwargs):
+        context = super(ChoisirWizard, self).get_context_data(**kwargs)
+
+        thematique = Thematique.objects.all().order_by('?')[0]
+        context['thematique'] = thematique
+
+        return context

@@ -14,7 +14,6 @@ urlpatterns = patterns('',
     url(r'^candidats/$', 'programmes.views.indexcandidat'),
 	url(r'^proposition/$', 'programmes.views.indexproposition'),
 
-	url(r'^choisir/$', 'programmes.views.choisir'),
-    #(r'^choisir/$', ChoisirWizard.as_view(template_name='choisir.html')),
+    (r'^choisir/$', ChoisirWizard.as_view()),
 
 )
