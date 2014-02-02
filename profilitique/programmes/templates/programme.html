@@ -11,8 +11,9 @@
 {% block menu %}
 	<ul>
 	{% for thematique in thematiques %}
-			   <li><a href="#">{{thematique.nom}}</a></li>
+			   <li id="thematique_{{thematique.id}}" class="thematique"><a href="#">{{thematique.nom}}</a></li>
 	{% endfor %}
+			<li id="toutes_les_thematique"><a href="#">toute les thématiques</a></li>
 	</ul>
 {% endblock menu %}
 
@@ -21,16 +22,21 @@
 	{% for candidat in candidats %}
 	  <div class="email-item email-item-selected pure-g">
 		    <div class="pure-u-3-4">
-		        <h5 class="email-name">{{ candidat.prenom}} {{ candidat.nom}}</h5>
+		        <h5 class="email-name candidat" id="candidat_{{candidat.id}}">{{ candidat.prenom}} {{ candidat.nom}}</h5>
 		    </div>
 		</div>
 	{% endfor %}
+	  <div class="email-item email-item-selected pure-g">
+		    <div class="pure-u-3-4">
+	<h5 class="email-name candidat" id="touts_les_candidats">tout(e)s les candidat(e)s</h5>
+		    </div>
+		</div>
 {% endblock liste %}
 
 
 {% block main %}
 	{% for candidat in candidats %}
-	      <div class="email-content">
+	      <div class="email-content propositions_candidat" id="proposition_candidat_{{ candidat.id}}">
 		    <div class="email-content-header pure-g">
 		        <div class="pure-u-1-2">
 		            <h1 class="email-content-title">{{ candidat.prenom}} {{ candidat.nom}}</h1>
@@ -43,13 +49,14 @@
 		    <div id='liste_propsition'>
 			{% for proposition in propositions %}
 				{% if proposition.candidat.id == candidat.id %}
-				<div class="box_proposition post-description">
+				<div class="box_proposition post-description proposition_thematique_{{proposition.thematique.id}}">
 					<h2>{{ proposition.thematique }}</h2>
 				    <div class="resume">{{ proposition.resume }}</div><img id="plus_{{ forloop.counter0 }}" src="/static/img/plus.png">
 				    <div id="description_proposition_{{ forloop.counter0 }}" class="description_proposition">{{ proposition.description }}</div>
 			    </div>
 				{% endif %}
 			{% endfor %}
+		    </div>
 		    </div>
 		</div>
 	{% endfor %}
