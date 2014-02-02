@@ -25,7 +25,6 @@ def indexproposition(request):
 
 
 def resultat(request):
-    print "####", request.session['results']
     votes = request.session['results']
 
     candidats = Candidat.objects.all()
@@ -38,9 +37,10 @@ def resultat(request):
     results = []
     for candidat in candidats:
         votes_per_candidat = Proposition.objects.filter(candidat=candidat.id, id__in=votes).count()
-        percent = votes_per_candidat/(thematiques_total * 1.0) * 100
+        percent = int(votes_per_candidat/(thematiques_total * 1.0) * 100)
         results.append((percent, candidat))
-    context = {'results': results}
+    results_sorted = sorted(results, key=lambda tup: tup[0], reverse=True)
+    context = {'results': results_sorted}
     return render(request, 'resultat.html', context)
 
 

@@ -36,11 +36,11 @@
 		{% for result in results %}
                 <section class="post">
                     <header class="post-header">
-                        <h2 class="post-title">{{ result.0 }}% {{ result.1.prenom }}, {{ result.1.nom }}</h2>
+                        <h2 class="post-title">{{ result.0 }}% {{ result.1.prenom }} {{ result.1.nom }}</h2>
                     </header>
                     <div class="post-description">
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.
+			Parti : {{ result.1.parti_list }}
                         </p>
                     </div>
                 </section>
