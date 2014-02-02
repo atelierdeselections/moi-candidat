@@ -16,3 +16,10 @@
 .propositions_candidat{
 	display:none;
 }
+#nav {
+width: 250px;
+}
+#list{
+	margin-left: -250px;
+	width: 250px;
+}
