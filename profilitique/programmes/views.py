@@ -1,5 +1,10 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.contrib.formtools.wizard.views import SessionWizardView
+
 from programmes.models import Candidat, Proposition, Thematique
+from programmes.forms import Thematique1, Thematique2
+
 
 
 def index(request):
@@ -18,7 +23,14 @@ def indexproposition(request):
     return render(request, 'indexProposition.html', context)
 
 
-def questions(request):
+def choisir(request):
     thematique = Thematique.objects.all().order_by('?')[0]
     context = {'thematique': thematique}
     return render(request, 'questions.html', context)
+
+
+class ChoisirWizard(SessionWizardView):
+    form_list = [Thematique1, Thematique2]
+    def done(self, form_list, **kwargs):
+        #do_something_with_the_form_data(form_list)
+        return HttpResponseRedirect('/')
