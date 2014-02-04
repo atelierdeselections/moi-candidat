@@ -3,8 +3,7 @@ Moi, candidat
 
 http://moi-candidat.atelierdeselections.fr/
 
-Projet réalisé dans le cadre de l'iniciative citoyenne "Atelier des élections" le 1er et 2 Février 2014 à Nantes et en cours de développement.
-
+Projet réalisé dans le cadre de l'iniciative citoyenne [Atelier des élections](http://atelierdeselections.fr/) le 1er et 2 Février 2014 à Nantes et en cours de développement.
 
 Instalation
 -----------
@@ -14,6 +13,8 @@ Instalation
     $ virtualenv virtenv
     $ source virtenv/bin/activate
     $ pip install -r requirements.txt
-    $ python moi_candidat/manage.py syncdb
+    $ python moi_candidat/manage.py syncdb  # répondre "yes" à la question du superuser
     $ python moi_candidat/manage.py runserver
 
+Dans votre navigateur web l'URL http://127.0.0.1:8000/ devrait afficher le front-end du site
+et http://127.0.0.1:8000/admin/ devrait afficher le back-end.
