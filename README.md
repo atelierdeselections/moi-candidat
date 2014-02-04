@@ -9,12 +9,11 @@ Projet réalisé dans le cadre de l'iniciative citoyenne "Atelier des élections
 Instalation
 -----------
 
-
     $ git clone git@github.com:atelierdeselections/moi-candidat.git
+    $ cd moi_candidat
     $ virtualenv virtenv
     $ source virtenv/bin/activate
     $ pip install -r requirements.txt
-    $ cd profilitique
-    $ python manage.py syncdb
-    $ python manage.py runserver
+    $ python moi_candidat/manage.py syncdb
+    $ python moi_candidat/manage.py runserver
 
