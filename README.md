@@ -13,7 +13,8 @@ Instalation
     $ virtualenv virtenv
     $ source virtenv/bin/activate
     $ pip install -r requirements.txt
-    $ python moi_candidat/manage.py syncdb  # répondre "yes" à la question du superuser
+    $ python moi_candidat/manage.py syncdb  # il faut répondre "yes" à la question du superuser
+    $ python moi_candidat/manage.py loaddata sample_data  # load sample data
     $ python moi_candidat/manage.py runserver
 
 Dans votre navigateur web l'URL http://127.0.0.1:8000/ devrait afficher le front-end du site
