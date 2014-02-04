@@ -10,7 +10,7 @@ Instalation
 -----------
 
 
-    $ git clone git@github.com:atelierdeselections/profilitique.git
+    $ git clone git@github.com:atelierdeselections/moi-candidat.git
     $ virtualenv virtenv
     $ source virtenv/bin/activate
     $ pip install -r requirements.txt
