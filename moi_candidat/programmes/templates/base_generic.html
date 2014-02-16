@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Moi, candidat.">
+
+    <title>Moi, candidat</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="/static/css/main-grid-old-ie.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="/static/css/main-grid.css">
+    <!--<![endif]-->
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="/static/css/layouts/marketing-old-ie.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="/static/css/layouts/marketing.css">
+    <!--<![endif]-->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+</head>
+<body>
+<div class="header">
+    <div class="home-menu pure-menu pure-menu-open pure-menu-horizontal pure-menu-fixed">
+        <a class="pure-menu-heading" href="">Moi, candidat</a>
+        <!--
+        <ul>
+            <li class="pure-menu-selected"><a href="#">Home</a></li>
+        </ul>
+        -->
+    </div>
+</div>
+
+<div class="splash-container">
+    {% block content %}
+    <div class="splash" style="height: 400px;">
+        <h1 class="splash-head">Moi, candidat</h1>
+        <p class="splash-subhead">
+            Nantes - Municipales 2014
+            <br/>
+            Découvrez le candidat qui vous représente le plus !
+        </p>
+        <p>
+            <a href="/choisir/" class="pure-button pure-button-primary" style="margin: 10px;">Trouver mon candidat</a>
+            <a href="/programmes/" class="pure-button pure-button-primary">Les Programmes</a>
+        </p>
+    </div>
+    {% endblock %}
+</div>
+
+<div class="content-wrapper">
+    <div class="content">
+        <h2 class="content-head is-center">Les outils pour vous aider à choisir votre candidat</h2>
+
+        <div class="pure-g">
+            <div class="l-box pure-u-1 pure-u-med-1-2 pure-u-lrg-1-4">
+
+                <h3 class="content-subhead">
+                    <i class="fa fa-rocket"></i>
+                    Trouver mon candidat
+                </h3>
+                <p>
+                   Un quizz pour vous aider à choisir votre candidat 
+                </p>
+            </div>
+            <div class="l-box pure-u-1 pure-u-med-1-2 pure-u-lrg-1-4">
+                <h3 class="content-subhead">
+                    <i class="fa fa-mobile"></i>
+                    Les programmes
+                </h3>
+                <p>
+                    Découvrez quel est votre programme idéal (à venir)
+                </p>
+            </div>
+            <div class="l-box pure-u-1 pure-u-med-1-2 pure-u-lrg-1-4">
+                <h3 class="content-subhead">
+                    <i class="fa fa-th-large"></i>
+                   Le comparateur
+                </h3>
+                <p>
+                   Comparez, thématique par thématique, les programmes de tous les candidats aux municipales de Nantes
+                </p>
+            </div>
+            <div class="l-box pure-u-1 pure-u-med-1-2 pure-u-lrg-1-4">
+                <h3 class="content-subhead">
+                    <i class="fa fa-check-square-o"></i>
+                    Les données
+                </h3>
+                <p>
+                    Téléchargez toutes les données des programmes (avec sources) en format csv (à venir)
+                </p>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="ribbon l-box-lrg pure-g">
+        <div class="l-box-lrg is-center pure-u-1 pure-u-med-1-2 pure-u-lrg-2-5">
+            <img class="pure-img-responsive" alt="File Icons" width="300" src="/static/img/atelierelections.png">
+        </div>
+        <div class="pure-u-1 pure-u-med-1-2 pure-u-lrg-3-5">
+
+            <h2 class="content-head content-head-ribbon">À propos</h2>
+
+            <p>
+                Projet réalisé dans le cadre de l'iniciative citoyenne "Atelier des élections" le 1er et 2 Février 2014 à Nantes et en cours de développement.<br/>
+                L'équipe :
+                <ul>
+                    <li>Arnaud Douillard <a style="color: #fff; text-decoration: none;" href="https://twitter.com/arnocturnale">@arnocturnale</a></li>
+                    <li>Benoît Desmazières <a style="color: #fff; text-decoration: none;" href="https://twitter.com/BenoitProjet">@benoitprojet</a></li>
+                    <li>Nicolas Patard <a style="color: #fff; text-decoration: none;" href="https://twitter.com/dill_44">@dill_44</a></li>
+                    <li>Pablo Seminario <a style="color: #fff; text-decoration: none;" href="https://twitter.com/pabluk">@pabluk</a></li>
+                    <li>Susana Nunes <a style="color: #fff; text-decoration: none;" href="https://twitter.com/smfnunes">@smfnunes</a></li>
+                </ul>
+                Le code source est disponible sur <a style="color: #fff; text-decoration: none;" href="https://github.com/atelierdeselections/moi-candidat">github.com/atelierdeselections/moi-candidat</a>
+            </p>
+        </div>
+    </div>
+    <div class="footer l-box is-center">
+        Nous contacter : atelierdeselections@gmail.com
+    </div>
+
+</div>
+
+<script src="http://yui.yahooapis.com/3.14.1/build/yui/yui.js"></script>
+<script>
+YUI().use('node-base', 'node-event-delegate', function (Y) {
+    // This just makes sure that the href="#" attached to the <a> elements
+    // don't scroll you back up the page.
+    Y.one('body').delegate('click', function (e) {
+        e.preventDefault();
+    }, 'a[href="#"]');
+});
+</script>
+
+</body>
+</html>
