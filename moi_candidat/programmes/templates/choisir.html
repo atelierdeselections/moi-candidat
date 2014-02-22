@@ -25,10 +25,10 @@
 	{% endif %}
 
             <div class="posts">
-		{% for proposition in thematique.proposition_set.all %}
+		{% for proposition in thematique.propositions %}
                 <section class="post">
                     <div class="post-description" id="proposition-{{ proposition.id }}">
-                        <p>{{ proposition.resume }}</p>
+                        <p>{{ proposition.description }}</p>
                     </div>
                 </section>
 		{% endfor %}
@@ -37,14 +37,9 @@
 	</form>
 	<script>
 	$(function() {
-		console.log('ready...');
 		proposition = $("input[name*='proposition']")
-		console.log(proposition);
 		$(".post-description").bind("click", function() {
-			console.log( "Handler for .click() called." );
-			console.log($(this).attr('id'));
-			console.log($(this).attr('id').match(/\d+/)[0]);
-			choose = $(this).attr('id').match(/\d+/)[0];
+			choose = $(this).attr('id').match(/proposition-(\w+)/)[1];
 			proposition.val(choose);
 			$('#thematique').submit();
 

@@ -82,6 +82,16 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/tmp/django_cache',
+        'TIMEOUT': 60 * 60,
+    }
+}
+
+VOXE_ELECTION_ID = ''
+
 try:
     from local_settings import *
 except ImportError:

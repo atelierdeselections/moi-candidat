@@ -36,8 +36,8 @@
 		{% for result in results %}
                 <section class="post">
                     <header class="post-header">
-			{% if result.1.photo %}
-		    	<img src="{{ result.1.photo.url }}" width="110px" style="display: inline-block;"/>
+			{% if result.1.photo_url %}
+		    	<img src="{{ result.1.photo_url }}" width="110px" style="display: inline-block;"/>
 			{% else %}
 			<img src="/static/img/candidat.png" width="110px" style="display: inline-block;"/>
 			{% endif %}
