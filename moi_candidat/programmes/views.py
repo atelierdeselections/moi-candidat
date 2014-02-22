@@ -1,6 +1,7 @@
 import re
+import csv
 from django.conf import settings
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.formtools.wizard.views import SessionWizardView
 
@@ -93,3 +94,42 @@ class ChoisirWizard(SessionWizardView):
             if form_current == idx:
                 context['thematique'] = t
         return context
+
+
+def export_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="nantes-municipales-2014.csv"'
+
+    writer = csv.writer(response)
+    election = voxe.Election(settings.VOXE_ELECTION_ID)
+
+    candidats = election.candidats
+    rows = []
+    longest_row = 0
+    for candidat in candidats:
+        row = []
+        fullname = "%s %s" % (candidat.prenom, candidat.nom)
+        row.append(fullname.encode('utf-8'))
+
+        for proposition in election.propositions_by_candidat(candidat):
+            row.append(proposition.description.encode('utf-8'))
+        row_size = len(row)
+        if row_size > longest_row:
+            longest_row = row_size
+        rows.append(row)
+
+    filled_rows = []
+    for row in rows:
+        new_row = []
+        for i in range(longest_row):
+            try:
+                new_row.append(row[i])
+            except IndexError:
+                new_row.append('')
+        filled_rows.append(new_row)
+    transposed = zip(*filled_rows)
+
+    for row in transposed:
+        writer.writerow(list(row))
+
+    return response

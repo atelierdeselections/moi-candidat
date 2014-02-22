@@ -18,5 +18,6 @@ urlpatterns = patterns('',
 	url(r'^programmes/$', 'programmes.views.programmes'),
     (r'^choisir/$', ChoisirWizard.as_view()),
 	url(r'^resultat/$', 'programmes.views.resultat'),
+	url(r'^export/$', 'programmes.views.export_csv'),
 
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
