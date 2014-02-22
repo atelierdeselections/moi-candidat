@@ -13,22 +13,22 @@
 	{% for thematique in thematiques %}
 			   <li id="thematique_{{thematique.id}}" class="thematique"><a href="#">{{thematique.nom}}</a></li>
 	{% endfor %}
-			<li id="toutes_les_thematique"><a href="#">toute les thématiques</a></li>
+			<li id="toutes_les_thematique" class="thematique"><a href="#">toute les thématiques</a></li>
 	</ul>
 {% endblock menu %}
 
 
 {% block liste %}
 	{% for candidat in candidats %}
-	  <div class="email-item email-item-selected pure-g">
+	  <div class="email-item email-item-selected pure-g candidat" id="candidat_{{candidat.id}}">
 		    <div class="pure-u-3-4">
-		        <h5 class="email-name candidat" id="candidat_{{candidat.id}}">{{ candidat.prenom}} {{ candidat.nom}}</h5>
+		        <h5 class="email-name">{{ candidat.prenom}} {{ candidat.nom}}</h5>
 		    </div>
 		</div>
 	{% endfor %}
-	  <div class="email-item email-item-selected pure-g">
+	  <div class="email-item email-item-selected pure-g candidat" id="touts_les_candidats">
 		    <div class="pure-u-3-4">
-	<h5 class="email-name candidat" id="touts_les_candidats">tout(e)s les candidat(e)s</h5>
+	<h5 class="email-name">tout(e)s les candidat(e)s</h5>
 		    </div>
 		</div>
 {% endblock liste %}
