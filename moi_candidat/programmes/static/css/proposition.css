@@ -16,13 +16,16 @@
 .propositions_candidat{
 	display:none;
 }
-#nav {
-width: 250px;
+@media screen and (min-width: 960px) {
+	#nav {
+		width: 250px;
+	}
+	#list{
+		margin-left: -250px;
+		width: 250px;
+	}
 }
-#list{
-	margin-left: -250px;
-	width: 250px;
-}
+
 .candidat{
 	cursor:pointer;
 }
