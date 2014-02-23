@@ -50,7 +50,10 @@ def resultat(request, hashcode):
         percent = int(votes_per_candidat/(thematiques_total * 1.0) * 100)
         results.append((percent, candidat))
     results_sorted = sorted(results, key=lambda tup: tup[0], reverse=True)
-    context = {'resultat': resultat, 'results': results_sorted}
+
+    current_url = request.build_absolute_uri()
+
+    context = {'resultat': resultat, 'results': results_sorted, 'current_url': current_url}
     return render(request, 'resultat.html', context)
 
 
@@ -66,7 +69,9 @@ def mon_programme(request, hashcode):
         if proposition.id in votes:
             propositions_selected.append(proposition)
 
-    context = {'resultat': resultat, 'propositions': propositions_selected}
+    current_url = request.build_absolute_uri()
+
+    context = {'resultat': resultat, 'propositions': propositions_selected, 'current_url': current_url}
     return render(request, 'mon-programme.html', context)
 
 

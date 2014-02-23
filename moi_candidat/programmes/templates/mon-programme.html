@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
 
+{% block title %}Mon programme politique idéal pour Nantes{% endblock title %}
+
 {% block head %}
 	<style>
 	.post-description {
@@ -14,6 +16,14 @@
 {% endblock head %}
 
 {% block header %}
+		<div id="fb-root"></div>
+		<script>(function(d, s, id) {
+		  var js, fjs = d.getElementsByTagName(s)[0];
+		  if (d.getElementById(id)) return;
+		  js = d.createElement(s); js.id = id;
+		  js.src = "//connect.facebook.net/fr_FR/all.js#xfbml=1";
+		  fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));</script>
             <hgroup>
                 <h1 class="brand-title">Mon programme</h1>
                 <h2 class="brand-tagline">Mes propositions</h2>
@@ -31,6 +41,11 @@
                     </li>
                 </ul>
             </nav>
+	    <div style="margin-top: 10px;">
+	    <div class="fb-share-button" data-href="{{ current_url }}" data-type="button" style="vertical-align: top;"></div>
+	    <a href="https://twitter.com/share" class="twitter-share-button" data-text="Mon programme politique idéal pour Nantes {{ current_url }}" data-lang="fr" data-related="atelections" data-count="none" data-hashtags="MUN44000">Twitter</a>
+	    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+	    </div>
 {% endblock header %}
 
 {% block content %}
