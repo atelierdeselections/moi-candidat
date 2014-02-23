@@ -58,6 +58,7 @@ class Election(object):
             for proposition in self.propositions:
                 if thematique.id in proposition.tags:
                     thematique.propositions.append(proposition)
+                    proposition.thematique = thematique
             self.thematiques.append(thematique)
 
     def candidature_by_candidat(self, candidat):
@@ -111,6 +112,7 @@ class Proposition(object):
         self.id = id
         self.description = ''
         self.tags = []
+        self.thematique = None
 
     def __repr__(self):
         return "<%s: %s>" % (self.__class__.__name__, self.id)

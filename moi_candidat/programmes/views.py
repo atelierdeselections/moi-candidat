@@ -50,8 +50,24 @@ def resultat(request, hashcode):
         percent = int(votes_per_candidat/(thematiques_total * 1.0) * 100)
         results.append((percent, candidat))
     results_sorted = sorted(results, key=lambda tup: tup[0], reverse=True)
-    context = {'results': results_sorted}
+    context = {'resultat': resultat, 'results': results_sorted}
     return render(request, 'resultat.html', context)
+
+
+def mon_programme(request, hashcode):
+    resultat = get_object_or_404(Resultat, hashcode=hashcode)
+    votes = resultat.propositions_csv.split(',')
+
+    election = voxe.Election(settings.VOXE_ELECTION_ID)
+    propositions = election.propositions
+
+    propositions_selected = []
+    for proposition in propositions:
+        if proposition.id in votes:
+            propositions_selected.append(proposition)
+
+    context = {'resultat': resultat, 'propositions': propositions_selected}
+    return render(request, 'mon-programme.html', context)
 
 
 def get_thematique_forms():

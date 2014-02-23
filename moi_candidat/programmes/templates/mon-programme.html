@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+
+{% block head %}
+	<style>
+	.post-description {
+		background-color: #fff;
+	}
+	.post-description:hover {
+		cursor:default;
+		background-color: #fff;
+	}
+	</style>
+{% endblock head %}
+
+{% block header %}
+            <hgroup>
+                <h1 class="brand-title">Mon programme</h1>
+                <h2 class="brand-tagline">Mes propositions</h2>
+            </hgroup>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a class="pure-button" href="/">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="pure-button" href="/resultat/{{ resultat.hashcode }}/">Résultat</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="pure-button" href="/choisir/">Recommencer</a>
+                    </li>
+                </ul>
+            </nav>
+{% endblock header %}
+
+{% block content %}
+
+            <div class="posts">
+		{% for proposition in propositions %}
+                <section class="post">
+		    <h1>{{ proposition.thematique.nom }}</h1>
+                    <div class="post-description" id="proposition-{{ proposition.id }}">
+                        <p>{{ proposition.description }}</p>
+                    </div>
+                </section>
+		{% endfor %}
+            </div>
+
+{% endblock %}
