@@ -1,6 +1,7 @@
 #!/usr/bin/env python
+import json
 import hashlib
-import requests
+import urllib2
 from django.core.cache import cache
 
 API = 'http://voxe.org/api/v1'
@@ -20,8 +21,9 @@ class Election(object):
         key = hashlib.md5(url).hexdigest()
         data = cache.get(key)
         if not data:
-            r = requests.get(url)
-            data = r.json()['response']
+            response = urllib2.urlopen(url)
+            raw_json = response.read()
+            data = json.loads(raw_json)['response']
             cache.set(key, data)
         return data
 
