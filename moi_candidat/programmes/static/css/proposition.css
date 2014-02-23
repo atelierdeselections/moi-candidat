@@ -23,3 +23,9 @@ width: 250px;
 	margin-left: -250px;
 	width: 250px;
 }
+.candidat{
+	cursor:pointer;
+}
+.candidat:hover{
+	background:#CCCCCC;
+}
