@@ -2,10 +2,11 @@ import re
 import csv
 from django.conf import settings
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.formtools.wizard.views import SessionWizardView
 
 from programmes.models import Candidat, Proposition, Thematique
+from programmes.models import Resultat
 from programmes.forms import ThematiqueForm
 
 import voxe
@@ -27,8 +28,9 @@ def indexproposition(request):
     return render(request, 'indexProposition.html', context)
 
 
-def resultat(request):
-    votes = request.session['results']
+def resultat(request, hashcode):
+    resultat = get_object_or_404(Resultat, hashcode=hashcode)
+    votes = resultat.propositions_csv.split(',')
 
     election = voxe.Election(settings.VOXE_ELECTION_ID)
     candidats = election.candidats
@@ -48,8 +50,29 @@ def resultat(request):
         percent = int(votes_per_candidat/(thematiques_total * 1.0) * 100)
         results.append((percent, candidat))
     results_sorted = sorted(results, key=lambda tup: tup[0], reverse=True)
-    context = {'results': results_sorted}
+
+    current_url = request.build_absolute_uri()
+
+    context = {'resultat': resultat, 'results': results_sorted, 'current_url': current_url}
     return render(request, 'resultat.html', context)
+
+
+def mon_programme(request, hashcode):
+    resultat = get_object_or_404(Resultat, hashcode=hashcode)
+    votes = resultat.propositions_csv.split(',')
+
+    election = voxe.Election(settings.VOXE_ELECTION_ID)
+    propositions = election.propositions
+
+    propositions_selected = []
+    for proposition in propositions:
+        if proposition.id in votes:
+            propositions_selected.append(proposition)
+
+    current_url = request.build_absolute_uri()
+
+    context = {'resultat': resultat, 'propositions': propositions_selected, 'current_url': current_url}
+    return render(request, 'mon-programme.html', context)
 
 
 def get_thematique_forms():
@@ -80,9 +103,15 @@ class ChoisirWizard(SessionWizardView):
         results = []
         for form in form_list:
             results.append(form.cleaned_data['proposition'])
-        self.request.session['results'] = results
-        
-        return HttpResponseRedirect('/resultat/')
+
+        propositions_csv = ",".join(results)
+        try:
+            resultat = Resultat.objects.get(propositions_csv=propositions_csv)
+        except Resultat.DoesNotExist:
+            resultat = Resultat(propositions_csv=propositions_csv)
+            resultat.save()
+
+        return HttpResponseRedirect('/resultat/%s/' % resultat.hashcode)
 
     def get_context_data(self, **kwargs):
         election = voxe.Election(settings.VOXE_ELECTION_ID)

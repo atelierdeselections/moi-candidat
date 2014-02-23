@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
-{% block title %}J'ai trouvé mon candidat pour Nantes{% endblock title %}
+
+{% block title %}Mon programme politique idéal pour Nantes{% endblock title %}
 
 {% block head %}
 	<style>
@@ -24,8 +25,8 @@
 		  fjs.parentNode.insertBefore(js, fjs);
 		}(document, 'script', 'facebook-jssdk'));</script>
             <hgroup>
-                <h1 class="brand-title">Votre résultat</h1>
-                <h2 class="brand-tagline">Liste de candidats</h2>
+                <h1 class="brand-title">Mon programme</h1>
+                <h2 class="brand-tagline">Mes propositions</h2>
             </hgroup>
             <nav class="nav">
                 <ul class="nav-list">
@@ -33,7 +34,7 @@
                         <a class="pure-button" href="/">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="pure-button" href="/mon-programme/{{ resultat.hashcode }}/">Mon programme</a>
+                        <a class="pure-button" href="/resultat/{{ resultat.hashcode }}/">Résultat</a>
                     </li>
                     <li class="nav-item">
                         <a class="pure-button" href="/choisir/">Recommencer</a>
@@ -42,7 +43,7 @@
             </nav>
 	    <div style="margin-top: 10px;">
 	    <div class="fb-share-button" data-href="{{ current_url }}" data-type="button" style="vertical-align: top;"></div>
-	    <a href="https://twitter.com/share" class="twitter-share-button" data-text="J'ai trouvé mon candidat pour Nantes {{ current_url }}" data-lang="fr" data-related="atelections" data-count="none" data-hashtags="MUN44000">Twitter</a>
+	    <a href="https://twitter.com/share" class="twitter-share-button" data-text="Mon programme politique idéal pour Nantes {{ current_url }}" data-lang="fr" data-related="atelections" data-count="none" data-hashtags="MUN44000">Twitter</a>
 	    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 	    </div>
 {% endblock header %}
@@ -50,23 +51,12 @@
 {% block content %}
 
             <div class="posts">
-		{% for result in results %}
+		{% for proposition in propositions %}
                 <section class="post">
-                    <header class="post-header">
-			{% if result.1.photo_url %}
-		    	<img src="{{ result.1.photo_url }}" width="110px" style="display: inline-block;"/>
-			{% else %}
-			<img src="/static/img/candidat.png" width="110px" style="display: inline-block;"/>
-			{% endif %}
-			<div style="display: inline-block; height: 110px; font-family: sans-serif; font-size: 6em; font-weight: bold;">
-				<span class="result-percent" style="">{{ result.0 }}%</span>
-			</div>
-			<div style="display: inline-block; width: 320px; height: 110px;">
-				<span class="candidat-nom" style="font-family: sans-serif; font-size: 2em; font-weight: bold;">{{ result.1.prenom }} {{ result.1.nom }}</span>
-				<br/>
-				<span class="candidat-parti">{{ result.1.parti_list }}</span>
-			</div>
-                    </header>
+		    <h1>{{ proposition.thematique.nom }}</h1>
+                    <div class="post-description" id="proposition-{{ proposition.id }}">
+                        <p>{{ proposition.description }}</p>
+                    </div>
                 </section>
 		{% endfor %}
             </div>
