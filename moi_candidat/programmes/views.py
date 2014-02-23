@@ -64,9 +64,10 @@ def get_thematique_forms():
 
 
 def programmes(request):
-    candidats = Candidat.objects.all()
-    thematiques = Thematique.objects.all()
-    propositions = Proposition.objects.all().order_by('candidat')
+    election = voxe.Election(settings.VOXE_ELECTION_ID)
+    candidats = election.candidats
+    thematiques = election.thematiques
+    propositions = election.propositions
     context = {'thematiques': thematiques,'candidats': candidats, 'propositions':propositions}
     return render(request, 'programme.html', context)
 

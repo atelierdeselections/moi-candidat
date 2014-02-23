@@ -29,3 +29,14 @@ width: 250px;
 .candidat:hover{
 	background:#CCCCCC;
 }
+#main{
+	width:100%;
+}
+.pure-u-1-2 {
+    width: 100%;
+}
+.photo_candidat {
+    border: 0 none;
+    float: left;
+    margin-right: 18px;
+}

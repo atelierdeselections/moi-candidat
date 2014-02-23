@@ -39,25 +39,40 @@
 	      <div class="email-content propositions_candidat" id="proposition_candidat_{{ candidat.id}}">
 		    <div class="email-content-header pure-g">
 		        <div class="pure-u-1-2">
+			    <img class="photo_candidat" src="{{candidat.photo_url}}"/>
 		            <h1 class="email-content-title">{{ candidat.prenom}} {{ candidat.nom}}</h1>
-		            <p class="email-content-subtitle">
-				{{ candidat.parti_list}}
-		            </p>
 		        </div>
 		    </div>
 		    <div class="email-content-body">
-		    <div id='liste_propsition'>
-			{% for proposition in propositions %}
-				{% if proposition.candidat.id == candidat.id %}
-				<div class="box_proposition post-description proposition_thematique_{{proposition.thematique.id}}">
-					<h2>{{ proposition.thematique }}</h2>
-				    <div class="resume">{{ proposition.resume }}</div><img id="plus_{{ forloop.counter0 }}" src="/static/img/plus.png">
-				    <div id="description_proposition_{{ forloop.counter0 }}" class="description_proposition">{{ proposition.description }}</div>
-			    </div>
+		    <div id='liste_propsition'>		
+		{% for proposition in propositions %}
+			{% for candidat2 in proposition.candidature.candidats %}
+				{% if candidat2.id == candidat.id %}
+					<div class="box_proposition post-description
+				{% for tag in  proposition.tags %} 
+					proposition_thematique_{{tag}}
+				{% endfor %}
+
+">
+						<h2>
+							{% for tag in  proposition.tags %}
+								{% for thematique in thematiques %}
+									{% if tag == thematique.id %}
+									   {{thematique.nom}}
+									{% endif %}
+								{% endfor %}
+							{% endfor %}
+						</h2>
+
+						<div class="resume">{{ proposition.description }}</div>	
+					</div>
 				{% endif %}
 			{% endfor %}
+		{% endfor %}
+
 		    </div>
 		    </div>
 		</div>
 	{% endfor %}
+
 {% endblock main %}
