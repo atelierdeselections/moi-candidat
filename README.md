@@ -55,3 +55,9 @@ DATABASES = {
 VOXE_ELECTION_ID = '5308832950b843643e0000c9'
 
 ```
+
+Pour maintenir à jour les données de Voxe.org il faut ajouter une tâche cron avec la commande suivante :
+
+```
+0,30 * * * * python moi_candidat/manage.py updatevoxedata
+```
