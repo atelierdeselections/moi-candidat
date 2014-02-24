@@ -54,16 +54,7 @@
 				{% endfor %}
 
 ">
-						<h2>
-							{% for tag in  proposition.tags %}
-								{% for thematique in thematiques %}
-									{% if tag == thematique.id %}
-									   {{thematique.nom}}
-									{% endif %}
-								{% endfor %}
-							{% endfor %}
-						</h2>
-
+						<h2>{{ proposition.sous_thematique.nom }}</h2>
 						<div class="resume">{{ proposition.description }}</div>	
 					</div>
 				{% endif %}
