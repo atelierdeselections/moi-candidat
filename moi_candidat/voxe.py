@@ -69,11 +69,19 @@ class Election(object):
         for tag in data_election['election']['tags']:
             thematique = Thematique(tag['id'])
             thematique.nom = tag['name']
+            thematique.sous_thematiques = []
+            for subtag in tag['tags']:
+                sous_thematique = Thematique(subtag['id'])
+                sous_thematique.nom = subtag['name']
+                thematique.sous_thematiques.append(sous_thematique)
+            self.thematiques.append(thematique)
             for proposition in self.propositions:
                 if thematique.id in proposition.tags:
                     thematique.propositions.append(proposition)
-                    proposition.thematique = thematique
-            self.thematiques.append(thematique)
+                    for sous_thematique in thematique.sous_thematiques:
+                        if sous_thematique.id in proposition.tags:
+                            sous_thematique.propositions.append(proposition)
+                            proposition.sous_thematique = sous_thematique
 
     def candidature_by_candidat(self, candidat):
         for candidature in self.candidatures:
@@ -116,6 +124,7 @@ class Thematique(object):
         self.id = id
         self.nom = ''
         self.propositions = []
+        self.sous_thematiques = []
 
     def __repr__(self):
         return "<%s: %s>" % (self.__class__.__name__, self.nom.encode('utf-8'))
@@ -126,7 +135,7 @@ class Proposition(object):
         self.id = id
         self.description = ''
         self.tags = []
-        self.thematique = None
+        self.sous_thematique = None
 
     def __repr__(self):
         return "<%s: %s>" % (self.__class__.__name__, self.id)

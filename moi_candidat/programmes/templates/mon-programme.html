@@ -53,7 +53,7 @@
             <div class="posts">
 		{% for proposition in propositions %}
                 <section class="post">
-		    <h1>{{ proposition.thematique.nom }}</h1>
+		    <h1>{{ proposition.sous_thematique.nom }}</h1>
                     <div class="post-description" id="proposition-{{ proposition.id }}">
                         <p>{{ proposition.description }}</p>
                     </div>

@@ -124,6 +124,7 @@ class ChoisirWizard(SessionWizardView):
                     if s.id == selected[current_step]:
                         context['thematique'] = s
                         break
+        context['nb_etapes'] = settings.MOICANDIDAT_NB_ETAPES
         return context
 
     def done(self, form_list, **kwargs):
