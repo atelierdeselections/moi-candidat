@@ -82,6 +82,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# Le nombre de questions
+MOICANDIDAT_NB_ETAPES = 5
+
 VOXE_API = 'http://voxe.org/api/v1'
 VOXE_CACHE_DIR = os.path.join(BASE_DIR, 'voxe_cache')
 VOXE_ELECTION_ID = '5308832950b843643e0000c9'

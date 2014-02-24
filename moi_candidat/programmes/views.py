@@ -7,7 +7,7 @@ from django.contrib.formtools.wizard.views import SessionWizardView
 
 from programmes.models import Candidat, Proposition, Thematique
 from programmes.models import Resultat
-from programmes.forms import ThematiqueForm
+from programmes.forms import PreThematiqueForm, ThematiqueForm
 
 import voxe
 
@@ -75,17 +75,6 @@ def mon_programme(request, hashcode):
     return render(request, 'mon-programme.html', context)
 
 
-def get_thematique_forms():
-    election = voxe.Election(settings.VOXE_ELECTION_ID)
-    thematiques = election.thematiques
-    count = len(thematiques)
-
-    thematique_forms = [ThematiqueForm for each in range(count)]
-    if not thematique_forms:
-        return [ThematiqueForm]
-    return thematique_forms
-
-
 def programmes(request):
     election = voxe.Election(settings.VOXE_ELECTION_ID)
     candidats = election.candidats
@@ -95,14 +84,53 @@ def programmes(request):
     return render(request, 'programme.html', context)
 
 
+def get_thematique_forms():
+    thematique_forms = [ThematiqueForm for each in range(settings.MOICANDIDAT_NB_ETAPES)]
+    thematique_forms.insert(0, PreThematiqueForm)
+    return thematique_forms
+
+
 class ChoisirWizard(SessionWizardView):
     form_list = get_thematique_forms()
     template_name = 'choisir.html'
 
+    def __init__(self, *args, **kwargs):
+        super(ChoisirWizard, self).__init__(*args, **kwargs)
+        self.election = voxe.Election(settings.VOXE_ELECTION_ID)
+
+    def get_form(self, step=None, data=None, files=None):
+        form = super(ChoisirWizard, self).get_form(step, data, files)
+
+        # determine the step if not given
+        if step is None:
+            step = self.steps.current
+
+        if step == '0':
+            choices = []
+            for t in self.election.thematiques:
+                for s in t.sous_thematiques:
+                    choices.append((s.id, s.nom))
+            form.fields['sous_thematiques'].choices = choices
+        return form
+
+    def get_context_data(self, form, **kwargs):
+        context = super(ChoisirWizard, self).get_context_data(form=form, **kwargs)
+        if self.steps.current != '0':
+            # Get data from first step
+            selected = self.get_cleaned_data_for_step('0')['sous_thematiques']
+            current_step = int(self.steps.current) - 1
+            for t in self.election.thematiques:
+                for s in t.sous_thematiques:
+                    if s.id == selected[current_step]:
+                        context['thematique'] = s
+                        break
+        return context
+
     def done(self, form_list, **kwargs):
         results = []
         for form in form_list:
-            results.append(form.cleaned_data['proposition'])
+            if 'proposition' in form.cleaned_data:
+                results.append(form.cleaned_data['proposition'])
 
         propositions_csv = ",".join(results)
         try:
@@ -112,18 +140,6 @@ class ChoisirWizard(SessionWizardView):
             resultat.save()
 
         return HttpResponseRedirect('/resultat/%s/' % resultat.hashcode)
-
-    def get_context_data(self, **kwargs):
-        election = voxe.Election(settings.VOXE_ELECTION_ID)
-        thematiques = election.thematiques
-        context = super(ChoisirWizard, self).get_context_data(**kwargs)
-        form_name = str(context['form'])
-        form_id_regex = re.search('name="(\d+)\-', form_name)
-        form_current = int(form_id_regex.groups()[0])
-        for idx, t in enumerate(thematiques):
-            if form_current == idx:
-                context['thematique'] = t
-        return context
 
 
 def export_csv(request):

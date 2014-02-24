@@ -6,8 +6,13 @@
 
 {% block header %}
             <hgroup>
-                <h1 class="brand-title">{{ thematique.nom }}</h1>
-                <h2 class="brand-tagline">Choisissez votre proposition</h2>
+		{% if wizard.steps.step1 == 1 %}
+			<h1 class="brand-title">Thématiques</h1>
+			<h2 class="brand-tagline">Choisissez les thématiques</h2>
+		{% else %}
+			<h1 class="brand-title">{{ thematique.nom }}</h1>
+			<h2 class="brand-tagline">Choisissez votre proposition</h2>
+		{% endif %}
                 <h2 class="brand-tagline">{{ wizard.steps.step1 }} de {{ wizard.steps.count }}</h2>
             </hgroup>
 {% endblock header %}
@@ -24,6 +29,9 @@
 	    {{ wizard.form }}
 	{% endif %}
 
+	{% if wizard.steps.step1 == 1 %}
+	    <input type="submit" value="Demarrer">
+	{% else %}
             <div class="posts">
 		{% for proposition in thematique.propositions %}
                 <section class="post">
@@ -33,6 +41,7 @@
                 </section>
 		{% endfor %}
             </div>
+	{% endif %}
 
 	</form>
 	<script>

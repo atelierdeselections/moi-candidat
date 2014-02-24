@@ -13,12 +13,15 @@ urlpatterns = patterns('',
 
     url(r'^$', 'programmes.views.index', name='index'),
     url(r'^admin/', include(admin.site.urls)),
+
     url(r'^candidats/$', 'programmes.views.indexcandidat'),
 	url(r'^proposition/$', 'programmes.views.indexproposition'),
 	url(r'^programmes/$', 'programmes.views.programmes'),
-    (r'^choisir/$', ChoisirWizard.as_view()),
+
+    url(r'^choisir/$', ChoisirWizard.as_view()),
 	url(r'^resultat/(?P<hashcode>\w+)/$', 'programmes.views.resultat'),
 	url(r'^mon-programme/(?P<hashcode>\w+)/$', 'programmes.views.mon_programme'),
+
 	url(r'^export/$', 'programmes.views.export_csv'),
 
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
