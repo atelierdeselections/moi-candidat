@@ -1,34 +1,46 @@
 #!/usr/bin/env python
+import os
 import json
 import hashlib
 import urllib2
-from django.core.cache import cache
-
-API = 'http://voxe.org/api/v1'
+from django.conf import settings
 
 
 class Election(object):
-    def __init__(self, id):
+    def __init__(self, id, cache_disabled=False):
         self.id = id
         self.candidatures = []
         self.candidats = []
         self.thematiques = []
         self.propositions = []
+        self.cache_disabled = cache_disabled
 
         self._election_data()
 
     def _get_data(self, url):
+        """Get from cache or from API."""
         key = hashlib.md5(url).hexdigest()
-        data = cache.get(key)
-        if not data:
-            response = urllib2.urlopen(url)
+        file_cached = os.path.join(settings.VOXE_CACHE_DIR, '%s.json' % key)
+        if not os.path.isfile(file_cached) or self.cache_disabled:
+            headers = {
+                'User-Agent': 'curl/7.21.0 (x86_64-pc-linux-gnu) libcurl/7.21.0 OpenSSL/0.9.8o zlib/1.2.3.3 libidn/1.8 libssh2/0.18',
+                'Accept': '*/*',
+            }
+            req = urllib2.Request(url, headers=headers)
+            response = urllib2.urlopen(req)
             raw_json = response.read()
-            data = json.loads(raw_json)['response']
-            cache.set(key, data)
+            # Save response to file
+            with open(file_cached, 'w') as f:
+                f.write(raw_json)
+        else:
+            # Read response from file
+            with open(file_cached) as f:
+                raw_json = f.read()
+        data = json.loads(raw_json)['response']
         return data
 
     def _election_data(self):
-        url = '%s/elections/%s' % (API, self.id)
+        url = '%s/elections/%s' % (settings.VOXE_API, self.id)
         data_election = self._get_data(url)
 
         for candidacy in data_election['election']['candidacies']:
@@ -43,7 +55,7 @@ class Election(object):
             self.candidatures.append(candidature)
 
         candidacies_ids = [c.id for c in self.candidatures]
-        url = '%s/propositions/search?candidacyIds=%s' % (API, ",".join(candidacies_ids))
+        url = '%s/propositions/search?candidacyIds=%s' % (settings.VOXE_API, ",".join(candidacies_ids))
         data = self._get_data(url)
         for p in data['propositions']:
             proposition = Proposition(p['id'])

@@ -90,7 +90,10 @@ CACHES = {
     }
 }
 
-VOXE_ELECTION_ID = ''
+VOXE_API = 'http://voxe.org/api/v1'
+VOXE_CACHE_DIR = os.path.join(BASE_DIR, 'voxe_cache')
+VOXE_ELECTION_ID = '5308832950b843643e0000c9'
+
 
 try:
     from local_settings import *
