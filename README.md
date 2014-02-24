@@ -5,6 +5,8 @@ http://moi-candidat.atelierdeselections.fr/
 
 Projet réalisé dans le cadre de l'iniciative citoyenne [Atelier des élections](http://atelierdeselections.fr/) le 1er et 2 Février 2014 à Nantes et en cours de développement.
 
+Cette application web utilise la plateforme collaborative [voxe.org](http://voxe.org/).
+
 Instalation
 -----------
 
@@ -47,4 +49,9 @@ DATABASES = {
          'HOST': 'localhost',
      }
 }
+
+# L'ID de l'election voir http://voxe.org/platform
+# Voici l'ID pour les elections de Nantes
+VOXE_ELECTION_ID = '5308832950b843643e0000c9'
+
 ```
