@@ -109,7 +109,8 @@ class ChoisirWizard(SessionWizardView):
             choices = []
             for t in self.election.thematiques:
                 for s in t.sous_thematiques:
-                    choices.append((s.id, s.nom))
+                    if len(s.propositions) > 1:
+                        choices.append((s.id, s.nom))
             form.fields['sous_thematiques'].choices = choices
         return form
 
