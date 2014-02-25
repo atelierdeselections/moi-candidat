@@ -5,7 +5,7 @@ from django.db import models
 
 class Parti(models.Model):
     nom = models.CharField(max_length=200)
-    
+
     def __unicode__(self):
         return self.nom
 
@@ -45,6 +45,7 @@ class Proposition(models.Model):
 
     def __unicode__(self):
         return self.resume
+
 
 class Resultat(models.Model):
     hashcode = models.CharField(u'Hashcode dans les URLs de partage', max_length=200)

@@ -1,11 +1,9 @@
-import re
 import csv
 from django.conf import settings
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.contrib.formtools.wizard.views import SessionWizardView
 
-from programmes.models import Candidat, Proposition, Thematique
 from programmes.models import Resultat
 from programmes.forms import PreThematiqueForm, ThematiqueForm
 
@@ -21,7 +19,7 @@ def programmes(request):
     candidats = election.candidats
     thematiques = election.thematiques
     propositions = election.propositions
-    context = {'thematiques': thematiques,'candidats': candidats, 'propositions':propositions}
+    context = {'thematiques': thematiques, 'candidats': candidats, 'propositions': propositions}
     return render(request, 'programmes.html', context)
 
 
@@ -31,9 +29,6 @@ def resultat(request, hashcode):
 
     election = voxe.Election(settings.VOXE_ELECTION_ID)
     candidats = election.candidats
-    candidats_total = len(candidats)
-    propositions = election.propositions
-    propositions_total = len(propositions)
     thematiques = election.thematiques
     thematiques_total = len(thematiques)
 

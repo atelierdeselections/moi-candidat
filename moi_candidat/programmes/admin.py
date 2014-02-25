@@ -12,6 +12,6 @@ class PropositionAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Parti)
-admin.site.register(Candidat,CandidatAdmin)
+admin.site.register(Candidat, CandidatAdmin)
 admin.site.register(Thematique)
 admin.site.register(Proposition, PropositionAdmin)
