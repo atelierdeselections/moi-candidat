@@ -22,7 +22,7 @@ def programmes(request):
     thematiques = election.thematiques
     propositions = election.propositions
     context = {'thematiques': thematiques,'candidats': candidats, 'propositions':propositions}
-    return render(request, 'programme.html', context)
+    return render(request, 'programmes.html', context)
 
 
 def resultat(request, hashcode):
