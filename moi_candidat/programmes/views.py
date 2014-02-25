@@ -16,16 +16,13 @@ def index(request):
     return render(request, 'index.html')
 
 
-def indexcandidat(request):
-    latest_candidat_list = Candidat.objects.all().order_by('parti')[:5]
-    context = {'latest_candidat_list': latest_candidat_list}
-    return render(request, 'indexCandidat.html', context)
-
-
-def indexproposition(request):
-    latest_proposition_list = Proposition.objects.all()
-    context = {'latest_proposition_list': latest_proposition_list}
-    return render(request, 'indexProposition.html', context)
+def programmes(request):
+    election = voxe.Election(settings.VOXE_ELECTION_ID)
+    candidats = election.candidats
+    thematiques = election.thematiques
+    propositions = election.propositions
+    context = {'thematiques': thematiques,'candidats': candidats, 'propositions':propositions}
+    return render(request, 'programme.html', context)
 
 
 def resultat(request, hashcode):
@@ -73,15 +70,6 @@ def mon_programme(request, hashcode):
 
     context = {'resultat': resultat, 'propositions': propositions_selected, 'current_url': current_url}
     return render(request, 'mon-programme.html', context)
-
-
-def programmes(request):
-    election = voxe.Election(settings.VOXE_ELECTION_ID)
-    candidats = election.candidats
-    thematiques = election.thematiques
-    propositions = election.propositions
-    context = {'thematiques': thematiques,'candidats': candidats, 'propositions':propositions}
-    return render(request, 'programme.html', context)
 
 
 def get_thematique_forms():
