@@ -53,8 +53,17 @@
             <div class="posts">
 		{% for proposition in propositions %}
                 <section class="post">
-		    <h1>{{ proposition.sous_thematique.nom }}</h1>
-                    <div class="post-description" id="proposition-{{ proposition.id }}">
+		    <div>
+		    {% with candidat=proposition.candidature.candidats.0 %}
+                        <img src="{% if candidat.photo_url %}{{ candidat.photo_url }}{% else %}/static/img/candidat.png{% endif %}" width="64px" style="display: inline-block;"/>
+			<div style="display: inline-block; font-size: 2em; font-weight: bold;">
+		            <span>{{ proposition.sous_thematique.nom }}</span>
+			    <br/>
+			    <span style="color: #34495E; font-size: 0.8em;">{{ candidat.prenom }} {{ candidat.nom }}</span>
+			</div>
+		    {% endwith %}
+		    </div>
+                    <div class="post-description" id="proposition-{{ proposition.id }}" style="padding: 0px;">
                         <p>{{ proposition.description }}</p>
                     </div>
                 </section>
