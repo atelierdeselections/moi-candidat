@@ -1,4 +1,5 @@
 import csv
+import random
 from django.conf import settings
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
@@ -106,6 +107,7 @@ class ChoisirWizard(SessionWizardView):
             for t in self.election.thematiques:
                 for s in t.sous_thematiques:
                     if s.id == selected[current_step]:
+                        random.shuffle(s.propositions)
                         context['thematique'] = s
                         break
         context['nb_etapes'] = settings.MOICANDIDAT_NB_ETAPES
