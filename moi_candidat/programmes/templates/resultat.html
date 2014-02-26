@@ -53,18 +53,12 @@
 		{% for result in results %}
                 <section class="post">
                     <header class="post-header">
-			{% if result.1.photo_url %}
-		    	<img src="{{ result.1.photo_url }}" width="110px" style="display: inline-block;"/>
-			{% else %}
-			<img src="/static/img/candidat.png" width="110px" style="display: inline-block;"/>
-			{% endif %}
+                        <img src="{% if result.1.photo_url %}{{ result.1.photo_url }}{% else %}/static/img/candidat.png{% endif %}" width="110px" style="display: inline-block;"/>
 			<div style="display: inline-block; height: 110px; font-family: sans-serif; font-size: 6em; font-weight: bold;">
 				<span class="result-percent" style="">{{ result.0 }}%</span>
 			</div>
 			<div style="display: inline-block; width: 320px; height: 110px;">
 				<span class="candidat-nom" style="font-family: sans-serif; font-size: 2em; font-weight: bold;">{{ result.1.prenom }} {{ result.1.nom }}</span>
-				<br/>
-				<span class="candidat-parti">{{ result.1.parti_list }}</span>
 			</div>
                     </header>
                 </section>
